@@ -1,0 +1,56 @@
+package in.example.one_to_one.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.example.one_to_one.model.Teacher;
+import in.example.one_to_one.repository.TeacherRepository;
+import in.example.one_to_one.service.TeacherService;
+
+
+@RestController
+@RequestMapping("/teachers")
+public class TeacherController {
+	
+	@Autowired
+	private TeacherService tservice;
+	
+	@GetMapping()
+	public String teacher() {
+		return "hello";
+	}
+	
+	@PostMapping("/save")
+	public Teacher saveTeacher (@RequestBody Teacher teacher) {
+		return tservice.saveTeacher(teacher);
+	}
+	
+	@GetMapping("/all")
+	public List<Teacher> getAllTeacher(){
+		return tservice.getAllTeacher();
+	}
+	
+	@GetMapping("/{id}")
+	public Teacher findById(@PathVariable Long id){
+		return tservice.findById(id);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) {
+		 tservice.deleteById(id);
+	}
+	
+	@PutMapping("/{id}")
+	public Teacher updateTeacher(@PathVariable Long id,@RequestBody Teacher teacher){
+		return tservice.updateTeacher(id, teacher);
+	}
+}
